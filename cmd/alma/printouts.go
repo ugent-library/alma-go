@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/ugentlib/alma-go"
@@ -33,8 +32,6 @@ var getPrintoutsCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = os.Stdout.Write(resBody)
-
-		return err
+		return writeJSON(cmd, resBody)
 	},
 }

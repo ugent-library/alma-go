@@ -25,9 +25,7 @@ var getUserCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = os.Stdout.Write(resBody)
-
-		return err
+		return writeJSON(cmd, resBody)
 	},
 }
 
@@ -48,8 +46,6 @@ var updateUserCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = os.Stdout.Write(resBody)
-
-		return err
+		return writeJSON(cmd, resBody)
 	},
 }

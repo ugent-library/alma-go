@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/ugentlib/alma-go"
@@ -54,9 +53,7 @@ var getBibCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = os.Stdout.Write(resBody)
-
-		return err
+		return writeJSON(cmd, resBody)
 	},
 }
 
@@ -72,9 +69,7 @@ var getHoldingsCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = os.Stdout.Write(resBody)
-
-		return err
+		return writeJSON(cmd, resBody)
 	},
 }
 
@@ -90,9 +85,7 @@ var getHoldingCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = os.Stdout.Write(resBody)
-
-		return err
+		return writeJSON(cmd, resBody)
 	},
 }
 
@@ -108,8 +101,6 @@ var getHoldingItemsCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = os.Stdout.Write(resBody)
-
-		return err
+		return writeJSON(cmd, resBody)
 	},
 }
