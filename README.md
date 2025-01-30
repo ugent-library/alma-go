@@ -35,6 +35,13 @@ almaClient := alma.New(alma.Config{
 user, err := almaClient.GetUser(ctx, "1234")
 ```
 
+## Running via Docker
+
+```sh
+docker pull ugentlib/alma-client:latest
+docker run ugentlib/alma-client users get 1234
+```
+
 ## Building from source
 
 ```sh
