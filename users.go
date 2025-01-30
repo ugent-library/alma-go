@@ -41,11 +41,26 @@ type User struct {
 	WebsiteURL          string       `json:"web_site_url,omitempty"`
 }
 
-func (c *Client) GetRawUser(ctx context.Context, id string) ([]byte, error) {
-	return c.getRaw(ctx, fmt.Sprintf("/users/%s", id))
+func (c *Client) RawGetUser(ctx context.Context, id string) ([]byte, error) {
+	return c.rawRequest(ctx, "GET", fmt.Sprintf("/users/%s", id), nil)
 }
 
 func (c *Client) GetUser(ctx context.Context, id string) (*User, error) {
-	b, err := c.GetRawUser(ctx, id)
-	return decodeRaw[User](b, err)
+	resData := &User{}
+	if err := c.request(ctx, "GET", fmt.Sprintf("/users/%s", id), nil, resData); err != nil {
+		return nil, err
+	}
+	return resData, nil
+}
+
+func (c *Client) RawUpdateUser(ctx context.Context, id string, body []byte) ([]byte, error) {
+	return c.rawRequest(ctx, "PUT", fmt.Sprintf("/users/%s", id), body)
+}
+
+func (c *Client) UpdateUser(ctx context.Context, id string, data *User) (*User, error) {
+	resData := &User{}
+	if err := c.request(ctx, "PUT", fmt.Sprintf("/users/%s", id), data, resData); err != nil {
+		return nil, err
+	}
+	return resData, nil
 }

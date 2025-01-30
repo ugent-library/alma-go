@@ -1,6 +1,7 @@
 package alma
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -28,14 +29,23 @@ func New(config Config) *Client {
 	}
 }
 
-func (c *Client) getRaw(ctx context.Context, path string) ([]byte, error) {
-	req, err := http.NewRequestWithContext(ctx, "GET", c.config.URL+path, nil)
+func (c *Client) rawRequest(ctx context.Context, method, path string, body []byte) ([]byte, error) {
+	var reqBody io.Reader
+
+	if body != nil {
+		reqBody = bytes.NewBuffer(body)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, method, c.config.URL+path, reqBody)
 	if err != nil {
 		return nil, err
 	}
 
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "apikey "+c.config.ApiKey)
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
 
 	res, err := c.httpClient.Do(req)
 	if err != nil {
@@ -44,25 +54,37 @@ func (c *Client) getRaw(ctx context.Context, path string) ([]byte, error) {
 
 	defer res.Body.Close()
 
-	b, err := io.ReadAll(res.Body)
+	resBody, err := io.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}
 
 	if res.StatusCode < 200 || res.StatusCode >= 400 {
-		return b, fmt.Errorf("http error, status code: %d", res.StatusCode)
+		return resBody, fmt.Errorf("http error %d: %s", res.StatusCode, resBody)
 	}
 
-	return b, nil
+	return resBody, nil
 }
 
-func decodeRaw[T any](b []byte, err error) (*T, error) {
+func (c *Client) request(ctx context.Context, method, path string, reqData any, resData any) error {
+	var reqBody []byte
+
+	if reqData != nil {
+		b, err := json.Marshal(reqData)
+		if err != nil {
+			return err
+		}
+		reqBody = b
+	}
+
+	resBody, err := c.rawRequest(ctx, method, path, reqBody)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	var t T
-	if err := json.Unmarshal(b, &t); err != nil {
-		return nil, err
+
+	if err := json.Unmarshal(resBody, resData); err != nil {
+		return err
 	}
-	return &t, nil
+
+	return nil
 }
