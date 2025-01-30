@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
-	"strings"
 	"time"
 
-	"github.com/gorilla/schema"
+	"github.com/google/go-querystring/query"
 )
 
 type Config struct {
@@ -20,21 +18,16 @@ type Config struct {
 }
 
 type Client struct {
-	config       Config
-	httpClient   *http.Client
-	queryEncoder *schema.Encoder
+	config     Config
+	httpClient *http.Client
 }
 
 func New(config Config) *Client {
-	queryEncoder := schema.NewEncoder()
-	queryEncoder.SetAliasTag("query")
-
 	return &Client{
 		config: config,
 		httpClient: &http.Client{
 			Timeout: time.Minute,
 		},
-		queryEncoder: queryEncoder,
 	}
 }
 
@@ -44,9 +37,17 @@ func (c *Client) rawRequest(ctx context.Context, method, path string, params any
 		reqBody = bytes.NewBuffer(body)
 	}
 
-	reqURL, err := c.url(path, params)
-	if err != nil {
-		return nil, err
+	reqURL := c.config.URL + path
+
+	if params != nil {
+		q, err := query.Values(params)
+		if err != nil {
+			return nil, err
+		}
+
+		if len(q) > 0 {
+			reqURL += "?" + q.Encode()
+		}
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, reqURL, reqBody)
@@ -100,36 +101,4 @@ func (c *Client) request(ctx context.Context, method, path string, params, reqDa
 	}
 
 	return nil
-}
-
-func (c *Client) url(path string, params any) (string, error) {
-	u := c.config.URL + path
-
-	if params != nil {
-		q := url.Values{}
-
-		if err := c.queryEncoder.Encode(params, q); err != nil {
-			return "", err
-		}
-
-		// cleanup and remove empty query params
-		for k, vals := range q {
-			var newVals []string
-			for _, v := range vals {
-				v = strings.TrimSpace(v)
-				if v != "" {
-					newVals = append(newVals, v)
-				}
-			}
-			if len(newVals) == 0 {
-				delete(q, k)
-			}
-		}
-
-		if len(q) > 0 {
-			u += "?" + q.Encode()
-		}
-	}
-
-	return u, nil
 }

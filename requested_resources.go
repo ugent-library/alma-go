@@ -5,15 +5,15 @@ import (
 )
 
 type GetRequestedResourcesParams struct {
-	Library    string `query:"library"`
-	CircDesk   string `query:"circ_desk"`
-	Location   string `query:"location"`
-	OrderBy    string `query:"order_by"`
-	Direction  string `query:"direction"`
-	PickupInst string `query:"pickup_inst"`
-	Reported   string `query:"reported"`
-	Limit      int    `query:"limit"`
-	Offset     int    `query:"offset"`
+	Library    string `url:"library"`
+	CircDesk   string `url:"circ_desk"`
+	Location   string `url:"location,omitempty"`
+	OrderBy    string `url:"order_by,omitempty"`
+	Direction  string `url:"direction,omitempty"`
+	PickupInst string `url:"pickup_inst,omitempty"`
+	Reported   string `url:"reported,omitempty"`
+	Limit      int    `url:"limit,omitempty"`
+	Offset     int    `url:"offset,omitempty"`
 }
 
 func (c *Client) RawGetRequestedResources(ctx context.Context, params GetRequestedResourcesParams) ([]byte, error) {
