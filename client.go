@@ -7,7 +7,11 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"strings"
 	"time"
+
+	"github.com/gorilla/schema"
 )
 
 type Config struct {
@@ -16,27 +20,36 @@ type Config struct {
 }
 
 type Client struct {
-	config     Config
-	httpClient *http.Client
+	config       Config
+	httpClient   *http.Client
+	queryEncoder *schema.Encoder
 }
 
 func New(config Config) *Client {
+	queryEncoder := schema.NewEncoder()
+	queryEncoder.SetAliasTag("query")
+
 	return &Client{
 		config: config,
 		httpClient: &http.Client{
 			Timeout: time.Minute,
 		},
+		queryEncoder: queryEncoder,
 	}
 }
 
-func (c *Client) rawRequest(ctx context.Context, method, path string, body []byte) ([]byte, error) {
+func (c *Client) rawRequest(ctx context.Context, method, path string, params any, body []byte) ([]byte, error) {
 	var reqBody io.Reader
-
 	if body != nil {
 		reqBody = bytes.NewBuffer(body)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, method, c.config.URL+path, reqBody)
+	reqURL, err := c.url(path, params)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, method, reqURL, reqBody)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +79,7 @@ func (c *Client) rawRequest(ctx context.Context, method, path string, body []byt
 	return resBody, nil
 }
 
-func (c *Client) request(ctx context.Context, method, path string, reqData any, resData any) error {
+func (c *Client) request(ctx context.Context, method, path string, params, reqData, resData any) error {
 	var reqBody []byte
 
 	if reqData != nil {
@@ -77,7 +90,7 @@ func (c *Client) request(ctx context.Context, method, path string, reqData any, 
 		reqBody = b
 	}
 
-	resBody, err := c.rawRequest(ctx, method, path, reqBody)
+	resBody, err := c.rawRequest(ctx, method, path, params, reqBody)
 	if err != nil {
 		return err
 	}
@@ -87,4 +100,36 @@ func (c *Client) request(ctx context.Context, method, path string, reqData any, 
 	}
 
 	return nil
+}
+
+func (c *Client) url(path string, params any) (string, error) {
+	u := c.config.URL + path
+
+	if params != nil {
+		q := url.Values{}
+
+		if err := c.queryEncoder.Encode(params, q); err != nil {
+			return "", err
+		}
+
+		// cleanup and remove empty query params
+		for k, vals := range q {
+			var newVals []string
+			for _, v := range vals {
+				v = strings.TrimSpace(v)
+				if v != "" {
+					newVals = append(newVals, v)
+				}
+			}
+			if len(newVals) == 0 {
+				delete(q, k)
+			}
+		}
+
+		if len(q) > 0 {
+			u += "?" + q.Encode()
+		}
+	}
+
+	return u, nil
 }
