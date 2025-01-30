@@ -2,6 +2,7 @@ package alma
 
 import (
 	"context"
+	"fmt"
 )
 
 type GetBibsParams struct {
@@ -19,4 +20,17 @@ type GetBibsParams struct {
 
 func (c *Client) RawGetBibs(ctx context.Context, params GetBibsParams) ([]byte, error) {
 	return c.rawRequest(ctx, "GET", "/bibs", params, nil)
+}
+
+type GetBibParams struct {
+	View   string   `url:"view,omitempty"`
+	Expand []string `url:"expand,omitempty" del:","`
+}
+
+func (c *Client) RawGetBib(ctx context.Context, mmsID string, params GetBibParams) ([]byte, error) {
+	return c.rawRequest(ctx, "GET", fmt.Sprintf("/bibs/%s", mmsID), params, nil)
+}
+
+func (c *Client) RawGetHoldings(ctx context.Context, mmsID string) ([]byte, error) {
+	return c.rawRequest(ctx, "GET", fmt.Sprintf("/bibs/%s/holdings", mmsID), nil, nil)
 }

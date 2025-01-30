@@ -11,8 +11,7 @@ import (
 var getPrintoutsParams = alma.GetPrintoutsParams{}
 
 func init() {
-	rootCmd.AddCommand(printoutsCmd)
-	printoutsCmd.AddCommand(getPrintoutsCmd)
+	rootCmd.AddCommand(getPrintoutsCmd)
 	getPrintoutsCmd.Flags().StringVar(&getPrintoutsParams.Letter, "letter", "", "")
 	getPrintoutsCmd.Flags().StringVar(&getPrintoutsParams.Status, "status", "", "")
 	getPrintoutsCmd.Flags().StringVar(&getPrintoutsParams.PrinterID, "printer-id", "", "")
@@ -22,13 +21,8 @@ func init() {
 	getPrintoutsCmd.Flags().IntVar(&getPrintoutsParams.Offset, "offset", 0, "")
 }
 
-var printoutsCmd = &cobra.Command{
-	Use:   "printouts",
-	Short: "",
-}
-
 var getPrintoutsCmd = &cobra.Command{
-	Use:   "get",
+	Use:   "printouts",
 	Short: "Get printouts",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {

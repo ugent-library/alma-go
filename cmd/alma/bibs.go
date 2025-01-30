@@ -11,8 +11,7 @@ import (
 var getBibsParams = alma.GetBibsParams{}
 
 func init() {
-	rootCmd.AddCommand(bibsCmd)
-	bibsCmd.AddCommand(getBibsCmd)
+	rootCmd.AddCommand(getBibsCmd)
 	getBibsCmd.Flags().StringSliceVar(&getBibsParams.MmsID, "mms-id", nil, "")
 	getBibsCmd.Flags().StringVar(&getBibsParams.IeID, "ie-id", "", "")
 	getBibsCmd.Flags().StringVar(&getBibsParams.HoldingsID, "holdings-id", "", "")
@@ -26,13 +25,8 @@ func init() {
 	getBibsCmd.MarkFlagsOneRequired("mms-id", "ie-id", "holdings-id", "representation-id", "nz-mms-id", "cz-mms-id", "other-system-id")
 }
 
-var bibsCmd = &cobra.Command{
-	Use:   "bibs",
-	Short: "",
-}
-
 var getBibsCmd = &cobra.Command{
-	Use:   "get",
+	Use:   "bibs",
 	Short: "Get bibs",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {

@@ -11,8 +11,7 @@ import (
 var getRequestedResourcesParams = alma.GetRequestedResourcesParams{}
 
 func init() {
-	rootCmd.AddCommand(requestedResourcesCmd)
-	requestedResourcesCmd.AddCommand(getRequestedResourcesCmd)
+	rootCmd.AddCommand(getRequestedResourcesCmd)
 	getRequestedResourcesCmd.Flags().StringVar(&getRequestedResourcesParams.CircDesk, "circ-desk", "", "e.g. DEFAULT_CIRC_DESK")
 	getRequestedResourcesCmd.Flags().StringVar(&getRequestedResourcesParams.Library, "library", "", "e.g. MAIN")
 	getRequestedResourcesCmd.Flags().StringVar(&getRequestedResourcesParams.Location, "location", "", "")
@@ -26,13 +25,8 @@ func init() {
 	getRequestedResourcesCmd.MarkFlagRequired("library")
 }
 
-var requestedResourcesCmd = &cobra.Command{
-	Use:   "requested-resources",
-	Short: "",
-}
-
 var getRequestedResourcesCmd = &cobra.Command{
-	Use:   "get",
+	Use:   "requested-resources",
 	Short: "Get requested resources",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {

@@ -9,18 +9,12 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(userCmd)
-	userCmd.AddCommand(getUserCmd)
-	userCmd.AddCommand(updateUserCmd)
-}
-
-var userCmd = &cobra.Command{
-	Use:   "user",
-	Short: "",
+	rootCmd.AddCommand(getUserCmd)
+	getUserCmd.AddCommand(updateUserCmd)
 }
 
 var getUserCmd = &cobra.Command{
-	Use:   "get [id]",
+	Use:   "user [id]",
 	Short: "Get user",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
