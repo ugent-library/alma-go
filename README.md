@@ -17,7 +17,9 @@ export ALMA_API_KEY="****"
 alma user 1234 > /tmp/user-record.json
 cat /tmp/user-record.json | alma user update 1234
 
-alma bibs get --mms-id 991119460000541,991457160000541
+alma bibs --mms-id 991119460000541,991457160000541
+
+alma bib holdings 991457160000541
 
 alma requested-resources --circ-desk DEFAULT_CIRC_DESK --library MAIN
 
