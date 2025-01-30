@@ -19,7 +19,10 @@ cat /tmp/user-record.json | alma user update 1234
 
 alma bibs --mms-id 991119460000541,991457160000541
 
+alma bib 991457160000541
 alma bib holdings 991457160000541
+alma bib holding 991022800000541 228340160000521
+alma bib holding items 991022800000541 228340160000521
 
 alma requested-resources --circ-desk DEFAULT_CIRC_DESK --library MAIN
 
