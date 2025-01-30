@@ -1,0 +1,50 @@
+package main
+
+import (
+	"context"
+	"os"
+
+	"github.com/spf13/cobra"
+	"github.com/ugentlib/alma-go"
+)
+
+var getBibsParams = alma.GetBibsParams{}
+
+func init() {
+	rootCmd.AddCommand(bibsCmd)
+	bibsCmd.AddCommand(getBibsCmd)
+	getBibsCmd.Flags().StringSliceVar(&getBibsParams.MmsID, "mms-id", nil, "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.IeID, "ie-id", "", "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.HoldingsID, "holdings-id", "", "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.RepresentationID, "representation-id", "", "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.NzMmsID, "nz-mms-id", "", "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.CzMmsID, "cz-mms-id", "", "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.View, "view", "full", `"full" or "brief"`)
+	getBibsCmd.Flags().StringSliceVar(&getBibsParams.Expand, "expand", nil, "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.OtherSystemID, "other-system-id", "", "")
+	getBibsCmd.Flags().StringVar(&getBibsParams.LodUri, "lod-uri", "", "")
+	getBibsCmd.MarkFlagsOneRequired("mms-id", "ie-id", "holdings-id", "representation-id", "nz-mms-id", "cz-mms-id", "other-system-id")
+}
+
+var bibsCmd = &cobra.Command{
+	Use:   "bibs",
+	Short: "",
+}
+
+var getBibsCmd = &cobra.Command{
+	Use:   "get",
+	Short: "Get bibs",
+	Args:  cobra.NoArgs,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ctx := context.Background()
+
+		resBody, err := almaClient.RawGetBibs(ctx, getBibsParams)
+		if err != nil {
+			return err
+		}
+
+		_, err = os.Stdout.Write(resBody)
+
+		return err
+	},
+}

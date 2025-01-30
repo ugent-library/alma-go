@@ -14,8 +14,10 @@ export ALMA_API_KEY="****"
 ## Using the CLI
 
 ```sh
-alma users get 1234 > /tmp/user-record.json
+alma user get 1234 > /tmp/user-record.json
 cat /tmp/user-record.json | alma user update 1234
+
+alma bibs get --mms-id 991119460000541,991457160000541
 
 alma requested-resources get --circ-desk DEFAULT_CIRC_DESK --library MAIN
 
@@ -39,7 +41,7 @@ user, err := almaClient.GetUser(ctx, "1234")
 
 ```sh
 docker pull ugentlib/alma-client:latest
-docker run ugentlib/alma-client users get 1234
+docker run ugentlib/alma-client user get 1234
 ```
 
 ## Building from source

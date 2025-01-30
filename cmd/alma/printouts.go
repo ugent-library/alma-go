@@ -30,6 +30,7 @@ var printoutsCmd = &cobra.Command{
 var getPrintoutsCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get printouts",
+	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 

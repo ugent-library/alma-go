@@ -9,13 +9,13 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(usersCmd)
-	usersCmd.AddCommand(getUserCmd)
-	usersCmd.AddCommand(updateUserCmd)
+	rootCmd.AddCommand(userCmd)
+	userCmd.AddCommand(getUserCmd)
+	userCmd.AddCommand(updateUserCmd)
 }
 
-var usersCmd = &cobra.Command{
-	Use:   "users",
+var userCmd = &cobra.Command{
+	Use:   "user",
 	Short: "",
 }
 

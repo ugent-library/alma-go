@@ -34,6 +34,7 @@ var requestedResourcesCmd = &cobra.Command{
 var getRequestedResourcesCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get requested resources",
+	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
