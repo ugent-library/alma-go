@@ -135,14 +135,10 @@ var getBibRecordCmd = &cobra.Command{
 				).
 				WithMultiline(true)
 
-			_, err = cmd.OutOrStdout().Write([]byte(t.View()))
-
-			return err
+			return writeString(cmd, t.View())
 		}
 
-		_, err = cmd.OutOrStdout().Write([]byte(resData.Record()))
-
-		return err
+		return writeString(cmd, resData.Record())
 	},
 }
 

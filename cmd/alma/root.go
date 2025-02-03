@@ -17,6 +17,11 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&prettify, "pretty", false, "")
 }
 
+func writeString(cmd *cobra.Command, str string) error {
+	_, err := cmd.OutOrStdout().Write([]byte(str))
+	return err
+}
+
 func writeJSON(cmd *cobra.Command, b []byte) error {
 	if prettify {
 		b = pretty.Color(pretty.Pretty(b), pretty.TerminalStyle)
