@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/spf13/cobra"
-	"github.com/ugentlib/alma-go"
+	"github.com/ugent-library/alma-go"
 )
 
 var getRequestedResourcesParams = alma.GetRequestedResourcesParams{}

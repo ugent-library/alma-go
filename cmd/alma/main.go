@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/caarlos0/env/v11"
-	"github.com/ugentlib/alma-go"
+	"github.com/ugent-library/alma-go"
 )
 
 var almaClient *alma.Client

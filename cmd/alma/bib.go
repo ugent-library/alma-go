@@ -1,10 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"context"
 
+	"github.com/charmbracelet/lipgloss"
+	"github.com/evertras/bubble-table/table"
 	"github.com/spf13/cobra"
-	"github.com/ugentlib/alma-go"
+	"github.com/ugent-library/alma-go"
+	"github.com/ugent-library/marc"
 )
 
 var getBibParams = alma.GetBibParams{}
@@ -15,6 +19,8 @@ func init() {
 	rootCmd.AddCommand(getBibCmd)
 	getBibCmd.Flags().StringVar(&getBibParams.View, "view", "full", `"full" or "brief"`)
 	getBibCmd.Flags().StringSliceVar(&getBibParams.Expand, "expand", nil, "")
+
+	getBibCmd.AddCommand(getBibRecordCmd)
 
 	getBibCmd.AddCommand(getHoldingsCmd)
 
@@ -54,6 +60,89 @@ var getBibCmd = &cobra.Command{
 		}
 
 		return writeJSON(cmd, resBody)
+	},
+}
+
+var getBibRecordCmd = &cobra.Command{
+	Use:   "record [mms-id]",
+	Short: "Get bib record only",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ctx := context.Background()
+
+		resData, err := almaClient.GetBib(ctx, args[0], alma.GetBibParams{})
+		if err != nil {
+			return err
+		}
+
+		if prettify {
+			dec := marc.NewMARCXMLDecoder(bytes.NewBuffer([]byte(resData.Record())))
+			rec, err := dec.Decode()
+			if err != nil {
+				return err
+			}
+
+			colTag := "tag"
+			colInd1 := "ind1"
+			colInd2 := "ind2"
+			colVal := "val"
+
+			sfStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#88f"))
+
+			cols := []table.Column{
+				table.NewColumn(colTag, "Tag", 5).WithStyle(
+					lipgloss.NewStyle().
+						Foreground(lipgloss.Color("#88f")),
+				),
+				table.NewColumn(colInd1, "Ind 1", 5),
+				table.NewColumn(colInd2, "Ind 2", 5),
+				table.NewColumn(colVal, "Value", 65),
+			}
+
+			rows := []table.Row{
+				table.NewRow(table.RowData{
+					colTag: "LDR",
+					colVal: rec.Leader,
+				}),
+			}
+			for _, field := range rec.ControlFields {
+				rows = append(rows, table.NewRow(table.RowData{
+					colTag: field.Tag,
+					colVal: field.Value,
+				}))
+			}
+			for _, field := range rec.DataFields {
+				val := ""
+				for _, sf := range field.SubFields {
+					val += sfStyle.Render(sf.Code) + sf.Value
+				}
+				rows = append(rows, table.NewRow(table.RowData{
+					colTag:  field.Tag,
+					colInd1: field.Ind1,
+					colInd2: field.Ind2,
+					colVal:  val,
+				}))
+			}
+
+			t := table.New(cols).
+				WithRows(rows).
+				HeaderStyle(lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)).
+				Focused(true).
+				WithBaseStyle(
+					lipgloss.NewStyle().
+						BorderForeground(lipgloss.Color("#a38")).
+						Align(lipgloss.Left),
+				).
+				WithMultiline(true)
+
+			_, err = cmd.OutOrStdout().Write([]byte(t.View()))
+
+			return err
+		}
+
+		_, err = cmd.OutOrStdout().Write([]byte(resData.Record()))
+
+		return err
 	},
 }
 

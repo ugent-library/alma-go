@@ -32,7 +32,7 @@ alma printouts
 ## Using the Go library
 
 ```go
-import 	"github.com/ugentlib/alma-go"
+import 	"github.com/ugent-library/alma-go"
 
 almaClient := alma.New(alma.Config{
 	URL:    "",
@@ -45,8 +45,8 @@ user, err := almaClient.GetUser(ctx, "1234")
 ## Running via Docker
 
 ```sh
-docker pull ugentlib/alma-client:latest
-docker run ugentlib/alma-client user 1234
+docker pull ugent-library/alma-client:latest
+docker run ugent-library/alma-client user 1234
 ```
 
 ## Building from source
