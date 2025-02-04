@@ -1,29 +1,29 @@
 package main
 
 import (
-	"log"
-	"os"
+	"context"
 
-	"github.com/caarlos0/env/v11"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/ugent-library/alma-go"
 )
+
+var config Config
 
 var almaClient *alma.Client
 
 func main() {
-	var config Config
+	viper.SetEnvPrefix("alma")
+	viper.BindEnv("url")
+	viper.BindEnv("api_key")
+	cobra.CheckErr(viper.Unmarshal(&config))
 
-	if err := env.Parse(&config); err != nil {
-		log.Fatal(err)
-	}
-
-	almaClient = alma.New(alma.Config{
-		URL:    config.Alma.URL,
-		ApiKey: config.Alma.ApiKey,
+	var err error
+	almaClient, err = alma.New(alma.Config{
+		URL:    config.URL,
+		ApiKey: config.ApiKey,
 	})
+	cobra.CheckErr(err)
 
-	err := rootCmd.Execute()
-	if err != nil {
-		os.Exit(1)
-	}
+	cobra.CheckErr(rootCmd.ExecuteContext(context.Background()))
 }

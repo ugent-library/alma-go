@@ -41,6 +41,20 @@ type User struct {
 	WebsiteURL          string       `json:"web_site_url,omitempty"`
 }
 
+type GetUsersParams struct {
+	Expand                string `url:"expand,omitempty"`
+	Limit                 int    `url:"limit,omitempty"`
+	Offset                int    `url:"offset,omitempty"`
+	OrderBy               string `url:"order_by,omitempty"`
+	Query                 string `url:"q,omitempty"`
+	SourceInstitutionCode string `url:"source_institution_code,omitempty"`
+	SourceUserID          string `url:"source_user_id,omitempty"`
+}
+
+func (c *Client) RawGetUsers(ctx context.Context, params GetUsersParams) ([]byte, error) {
+	return c.rawRequest(ctx, "GET", "/users", params, nil)
+}
+
 func (c *Client) RawGetUser(ctx context.Context, id string) ([]byte, error) {
 	return c.rawRequest(ctx, "GET", fmt.Sprintf("/users/%s", id), nil, nil)
 }

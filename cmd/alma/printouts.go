@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-
 	"github.com/spf13/cobra"
 	"github.com/ugent-library/alma-go"
 )
@@ -25,9 +23,7 @@ var getPrintoutsCmd = &cobra.Command{
 	Short: "Get printouts",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resBody, err := almaClient.RawGetPrintouts(ctx, getPrintoutsParams)
+		resBody, err := almaClient.RawGetPrintouts(cmd.Context(), getPrintoutsParams)
 		if err != nil {
 			return err
 		}

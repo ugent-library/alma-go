@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -22,13 +23,20 @@ type Client struct {
 	httpClient *http.Client
 }
 
-func New(config Config) *Client {
+func New(config Config) (*Client, error) {
+	if config.URL == "" {
+		return nil, errors.New("alma: url is empty")
+	}
+	if config.ApiKey == "" {
+		return nil, errors.New("alma: api key is empty")
+	}
+
 	return &Client{
 		config: config,
 		httpClient: &http.Client{
 			Timeout: time.Minute,
 		},
-	}
+	}, nil
 }
 
 func (c *Client) rawRequest(ctx context.Context, method, path string, params any, body []byte) ([]byte, error) {

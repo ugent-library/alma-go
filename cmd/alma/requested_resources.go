@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-
 	"github.com/spf13/cobra"
 	"github.com/ugent-library/alma-go"
 )
@@ -29,9 +27,7 @@ var getRequestedResourcesCmd = &cobra.Command{
 	Short: "Get requested resources",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resBody, err := almaClient.RawGetRequestedResources(ctx, getRequestedResourcesParams)
+		resBody, err := almaClient.RawGetRequestedResources(cmd.Context(), getRequestedResourcesParams)
 		if err != nil {
 			return err
 		}

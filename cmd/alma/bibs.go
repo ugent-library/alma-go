@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-
 	"github.com/spf13/cobra"
 	"github.com/ugent-library/alma-go"
 )
@@ -29,9 +27,7 @@ var getBibsCmd = &cobra.Command{
 	Short: "Get bibs",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resBody, err := almaClient.RawGetBibs(ctx, getBibsParams)
+		resBody, err := almaClient.RawGetBibs(cmd.Context(), getBibsParams)
 		if err != nil {
 			return err
 		}

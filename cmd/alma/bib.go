@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"context"
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/evertras/bubble-table/table"
@@ -52,9 +51,7 @@ var getBibCmd = &cobra.Command{
 	Short: "Get bib",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resBody, err := almaClient.RawGetBib(ctx, args[0], getBibParams)
+		resBody, err := almaClient.RawGetBib(cmd.Context(), args[0], getBibParams)
 		if err != nil {
 			return err
 		}
@@ -68,9 +65,7 @@ var getBibRecordCmd = &cobra.Command{
 	Short: "Get bib record only",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resData, err := almaClient.GetBib(ctx, args[0], alma.GetBibParams{})
+		resData, err := almaClient.GetBib(cmd.Context(), args[0], alma.GetBibParams{})
 		if err != nil {
 			return err
 		}
@@ -147,9 +142,7 @@ var getHoldingsCmd = &cobra.Command{
 	Short: "Get bib holdings",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resBody, err := almaClient.RawGetHoldings(ctx, args[0])
+		resBody, err := almaClient.RawGetHoldings(cmd.Context(), args[0])
 		if err != nil {
 			return err
 		}
@@ -163,9 +156,7 @@ var getHoldingCmd = &cobra.Command{
 	Short: "Get bib holding",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resBody, err := almaClient.RawGetHolding(ctx, args[0], args[1])
+		resBody, err := almaClient.RawGetHolding(cmd.Context(), args[0], args[1])
 		if err != nil {
 			return err
 		}
@@ -179,9 +170,7 @@ var getHoldingItemsCmd = &cobra.Command{
 	Short: "Get bib holding items",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-
-		resBody, err := almaClient.RawGetHoldingItems(ctx, args[0], args[1], getItemsParams)
+		resBody, err := almaClient.RawGetHoldingItems(cmd.Context(), args[0], args[1], getItemsParams)
 		if err != nil {
 			return err
 		}
