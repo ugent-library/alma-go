@@ -3,7 +3,6 @@ module github.com/ugent-library/alma-go
 go 1.23.5
 
 require (
-	github.com/caarlos0/env/v11 v11.3.1
 	github.com/charmbracelet/lipgloss v0.13.0
 	github.com/spf13/cobra v1.8.1
 	github.com/ugent-library/marc v0.0.0-20240129131238-4a5e6fd47acb
