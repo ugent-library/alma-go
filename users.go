@@ -6,48 +6,56 @@ import (
 	"fmt"
 )
 
-// TODO requests, loans, fees, user_identifiers, user_roles, user_blocks, user_notes, user_statistics, proxy_for_users, library_notices, is_researcher, researcher
+// TODO requests, loans, fees, user_roles, user_blocks, user_notes, user_statistics, proxy_for_users, library_notices, is_researcher, researcher
 type User struct {
-	XMLName                xml.Name     `json:"-" xml:"user"`
-	AccountType            *Code        `json:"account_type,omitempty" xml:"account_type,omitempty"`
-	BirthDate              string       `json:"birth_date,omitempty" xml:"birth_date,omitempty"`
-	CampusCode             *Code        `json:"campus_code,omitempty" xml:"campus_code,omitempty"`
-	CatalogerLevel         *Code        `json:"cataloger_level,omitempty" xml:"cataloger_level,omitempty"`
-	ContactInfo            *ContactInfo `json:"contact_info,omitempty" xml:"contact_info,omitempty"`
-	CreatedBy              string       `json:"created_by,omitempty" xml:"created_by,omitempty"`
-	CreatedDate            string       `json:"created_date,omitempty" xml:"created_date,omitempty"`
-	ExpiryDate             string       `json:"expiry_date,omitempty" xml:"expiry_date,omitempty"`
-	ExternalID             string       `json:"external_id,omitempty" xml:"external_id,omitempty"`
-	FirstName              string       `json:"first_name,omitempty" xml:"first_name,omitempty"`
-	ForcePasswordChange    string       `json:"force_password_change,omitempty" xml:"force_password_change,omitempty"`
-	FullName               string       `json:"full_name,omitempty" xml:"full_name,omitempty"`
-	Gender                 *Code        `json:"gender,omitempty" xml:"gender,omitempty"`
-	JobCategory            *Code        `json:"job_category,omitempty" xml:"job_category,omitempty"`
-	JobDescription         string       `json:"job_description,omitempty" xml:"job_description,omitempty"`
-	LastModifiedBy         string       `json:"last_modified_by,omitempty" xml:"last_modified_by,omitempty"`
-	LastModifiedDate       string       `json:"last_modified_date,omitempty" xml:"last_modified_date,omitempty"`
-	LastName               string       `json:"last_name,omitempty" xml:"last_name,omitempty"`
-	LastPatronActivityDate string       `json:"last_patron_activity_date,omitempty" xml:"last_patron_activity_date,omitempty"`
-	LinkingID              string       `json:"linking_id,omitempty" xml:"linking_id,omitempty"`
-	MiddleName             string       `json:"middle_name,omitempty" xml:"middle_name,omitempty"`
-	Password               string       `json:"password,omitempty" xml:"password,omitempty"`
-	PinNumber              string       `json:"pin_number,omitempty" xml:"pin_number,omitempty"`
-	PreferredLanguage      *Code        `json:"preferred_language,omitempty" xml:"preferred_language,omitempty"`
-	PrefFirstName          string       `json:"pref_first_name,omitempty" xml:"pref_first_name,omitempty"`
-	PrefLastName           string       `json:"pref_last_name,omitempty" xml:"pref_last_name,omitempty"`
-	PrefMiddleName         string       `json:"pref_middle_name,omitempty" xml:"pref_middle_name,omitempty"`
-	PrefNameSuffix         string       `json:"pref_name_suffix,omitempty" xml:"pref_name_suffix,omitempty"`
-	PrimaryID              string       `json:"primary_id,omitempty" xml:"primary_id,omitempty"`
-	PurgeDate              string       `json:"purge_date,omitempty" xml:"purge_date,omitempty"`
-	RsLibrary              []RsLibrary  `json:"rs_library,omitempty" xml:"rs_libraries>rs_library,omitempty"`
-	RecordType             *Code        `json:"record_type,omitempty" xml:"record_type,omitempty"`
-	SourceLinkID           string       `json:"source_link_id,omitempty" xml:"source_link_id,omitempty"`
-	SourceInstitutionCode  string       `json:"source_institution_code,omitempty" xml:"source_institution_code,omitempty"`
-	Status                 *Code        `json:"status,omitempty" xml:"status,omitempty"`
-	StatusDate             string       `json:"status_date,omitempty" xml:"status_date,omitempty"`
-	UserGroup              *Code        `json:"user_group,omitempty" xml:"user_group,omitempty"`
-	UserTitle              *Code        `json:"user_title,omitempty" xml:"user_title,omitempty"`
-	WebsiteURL             string       `json:"web_site_url,omitempty" xml:"web_site_url,omitempty"`
+	XMLName                xml.Name         `json:"-" xml:"user"`
+	AccountType            *Code            `json:"account_type,omitempty" xml:"account_type,omitempty"`
+	BirthDate              string           `json:"birth_date,omitempty" xml:"birth_date,omitempty"`
+	CampusCode             *Code            `json:"campus_code,omitempty" xml:"campus_code,omitempty"`
+	CatalogerLevel         *Code            `json:"cataloger_level,omitempty" xml:"cataloger_level,omitempty"`
+	ContactInfo            *ContactInfo     `json:"contact_info,omitempty" xml:"contact_info,omitempty"`
+	CreatedBy              string           `json:"created_by,omitempty" xml:"created_by,omitempty"`
+	CreatedDate            string           `json:"created_date,omitempty" xml:"created_date,omitempty"`
+	ExpiryDate             string           `json:"expiry_date,omitempty" xml:"expiry_date,omitempty"`
+	ExternalID             string           `json:"external_id,omitempty" xml:"external_id,omitempty"`
+	FirstName              string           `json:"first_name,omitempty" xml:"first_name,omitempty"`
+	ForcePasswordChange    string           `json:"force_password_change,omitempty" xml:"force_password_change,omitempty"`
+	FullName               string           `json:"full_name,omitempty" xml:"full_name,omitempty"`
+	Gender                 *Code            `json:"gender,omitempty" xml:"gender,omitempty"`
+	JobCategory            *Code            `json:"job_category,omitempty" xml:"job_category,omitempty"`
+	JobDescription         string           `json:"job_description,omitempty" xml:"job_description,omitempty"`
+	LastModifiedBy         string           `json:"last_modified_by,omitempty" xml:"last_modified_by,omitempty"`
+	LastModifiedDate       string           `json:"last_modified_date,omitempty" xml:"last_modified_date,omitempty"`
+	LastName               string           `json:"last_name,omitempty" xml:"last_name,omitempty"`
+	LastPatronActivityDate string           `json:"last_patron_activity_date,omitempty" xml:"last_patron_activity_date,omitempty"`
+	LinkingID              string           `json:"linking_id,omitempty" xml:"linking_id,omitempty"`
+	MiddleName             string           `json:"middle_name,omitempty" xml:"middle_name,omitempty"`
+	Password               string           `json:"password,omitempty" xml:"password,omitempty"`
+	PinNumber              string           `json:"pin_number,omitempty" xml:"pin_number,omitempty"`
+	PreferredLanguage      *Code            `json:"preferred_language,omitempty" xml:"preferred_language,omitempty"`
+	PrefFirstName          string           `json:"pref_first_name,omitempty" xml:"pref_first_name,omitempty"`
+	PrefLastName           string           `json:"pref_last_name,omitempty" xml:"pref_last_name,omitempty"`
+	PrefMiddleName         string           `json:"pref_middle_name,omitempty" xml:"pref_middle_name,omitempty"`
+	PrefNameSuffix         string           `json:"pref_name_suffix,omitempty" xml:"pref_name_suffix,omitempty"`
+	PrimaryID              string           `json:"primary_id,omitempty" xml:"primary_id,omitempty"`
+	PurgeDate              string           `json:"purge_date,omitempty" xml:"purge_date,omitempty"`
+	RsLibrary              []RsLibrary      `json:"rs_library,omitempty" xml:"rs_libraries>rs_library,omitempty"`
+	RecordType             *Code            `json:"record_type,omitempty" xml:"record_type,omitempty"`
+	SourceLinkID           string           `json:"source_link_id,omitempty" xml:"source_link_id,omitempty"`
+	SourceInstitutionCode  string           `json:"source_institution_code,omitempty" xml:"source_institution_code,omitempty"`
+	Status                 *Code            `json:"status,omitempty" xml:"status,omitempty"`
+	StatusDate             string           `json:"status_date,omitempty" xml:"status_date,omitempty"`
+	UserGroup              *Code            `json:"user_group,omitempty" xml:"user_group,omitempty"`
+	UserIdentifier         []UserIdentifier `json:"user_identifier,omitempty" xml:"user_identifiers>user_identifier,omitempty"`
+	UserTitle              *Code            `json:"user_title,omitempty" xml:"user_title,omitempty"`
+	WebsiteURL             string           `json:"web_site_url,omitempty" xml:"web_site_url,omitempty"`
+}
+
+type UserIdentifier struct {
+	IdType Code   `json:"id_type" xml:"id_type"`
+	Value  string `json:"value" xml:"value"`
+	Note   string `json:"note,omitempty" xml:"note,omitempty"`
+	Status string `json:"status,omitempty" xml:"status,omitempty"`
 }
 
 type GetUsersParams struct {
