@@ -13,10 +13,11 @@ var config Config
 var almaClient *alma.Client
 
 func main() {
-	viper.SetEnvPrefix("alma")
-	viper.BindEnv("url")
-	viper.BindEnv("api_key")
-	cobra.CheckErr(viper.Unmarshal(&config))
+	v := viper.New()
+	v.SetEnvPrefix("alma")
+	v.BindEnv("url")
+	v.BindEnv("api_key")
+	cobra.CheckErr(v.Unmarshal(&config))
 
 	var err error
 	almaClient, err = alma.New(alma.Config{
