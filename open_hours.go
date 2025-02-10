@@ -13,7 +13,7 @@ func (c *Client) RawGetOpenHours(ctx context.Context, params GetOpenHoursParams)
 }
 
 type UpdateOpenHoursParams struct {
-	Scope string `url:"scope,omitempty"`
+	Scope string `url:"scope"`
 }
 
 func (c *Client) RawUpdateOpenHours(ctx context.Context, params UpdateOpenHoursParams, body []byte) ([]byte, error) {

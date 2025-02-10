@@ -18,6 +18,7 @@ func init() {
 	getOpenHoursCmd.Flags().StringVar(&getOpenHoursParams.Scope, "scope", "", "")
 	getOpenHoursCmd.AddCommand(updateOpenHoursCmd)
 	updateOpenHoursCmd.Flags().StringVar(&updateOpenHoursParams.Scope, "scope", "", "")
+	updateOpenHoursCmd.MarkFlagRequired("scope")
 }
 
 var getOpenHoursCmd = &cobra.Command{
