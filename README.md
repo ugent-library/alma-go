@@ -26,6 +26,12 @@ alma bib holding items 991022800000541 228340160000521
 
 alma requested-resources --circ-desk DEFAULT_CIRC_DESK --library MAIN
 
+alma library MAIN
+alma library open-hours MAIN
+
+alma open-hours --scope MAIN > /tmp/open-hours.json
+alma open-hours update --scope MAIN < /tmp/open-hours.json
+
 alma printouts
 ```
 
