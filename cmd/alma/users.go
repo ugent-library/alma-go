@@ -21,7 +21,22 @@ func init() {
 var getUsersCmd = &cobra.Command{
 	Use:   "users",
 	Short: "Get users",
-	Args:  cobra.NoArgs,
+	Long: `Get users
+
+# Retrieve the first batch of users
+alma users 
+
+# Retrieve the second batch of users
+alma users --offset 10
+
+# Search users based on last_name
+alma users -q 'last_name~steenlant'
+
+# Boolean search
+alma users -q 'first_name~nicolas AND last_name~steenlant'
+
+# Other search parameters: primary_id, first_name, last_name, middle_name, email, phone_number, job_category, identifiers, birth_date, user_group, campus_code, block_type, id_type, note_text, note_type, statistic_category, fines_fees_sum, general_info`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 

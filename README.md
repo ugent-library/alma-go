@@ -68,3 +68,5 @@ go build -o ~/bin/alma cmd/alma/*
 ```sh
 go run cmd/alma/* [command] [opts...]
 ```
+
+See the REST API [documentation](https://developers.exlibrisgroup.com/alma/apis/) for more information.
