@@ -49,7 +49,11 @@ func init() {
 var getBibCmd = &cobra.Command{
 	Use:   "bib [mms-id]",
 	Short: "Get bib",
-	Args:  cobra.ExactArgs(1),
+	Long: `Get bib - retrieve information about bibliographic records
+
+# Retrieve a raw JSON record about bib record 991457160000541
+alma bib 991457160000541`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
@@ -65,7 +69,14 @@ var getBibCmd = &cobra.Command{
 var getBibRecordCmd = &cobra.Command{
 	Use:   "record [mms-id]",
 	Short: "Get bib record only",
-	Args:  cobra.ExactArgs(1),
+	Long: `Get bib record only
+
+# Retrieve only the record data for bib record 991457160000541
+alma bib record 991457160000541
+
+# Retrieve the record data for bib record 991457160000541 in a pretty format
+alma bib record 991457160000541 --pretty`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
@@ -144,7 +155,11 @@ var getBibRecordCmd = &cobra.Command{
 var getHoldingsCmd = &cobra.Command{
 	Use:   "holdings [mms-id]",
 	Short: "Get bib holdings",
-	Args:  cobra.ExactArgs(1),
+	Long: `Get bib holdings
+
+# Retrieve the holdings for bib record 991457160000541 in a pretty format
+alma bib holdings 991457160000541 --pretty`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
@@ -160,7 +175,11 @@ var getHoldingsCmd = &cobra.Command{
 var getHoldingCmd = &cobra.Command{
 	Use:   "holding [mms-id] [holding-id]",
 	Short: "Get bib holding",
-	Args:  cobra.ExactArgs(2),
+	Long: `Get bib holding
+	
+# Retrieve for bib record 991457160000541 the holding 228340160000521
+alma bib holding 991022800000541 228340160000521`,
+	Args: cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
@@ -176,7 +195,11 @@ var getHoldingCmd = &cobra.Command{
 var getHoldingItemsCmd = &cobra.Command{
 	Use:   "items [mms-id] [holding-id]",
 	Short: "Get bib holding items",
-	Args:  cobra.ExactArgs(2),
+	Long: `Get bib holding items
+
+# Retrieve the items for bib record 991457160000541 and holding 228340160000521
+alma bib holding items 991022800000541 228340160000521`,
+	Args: cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
