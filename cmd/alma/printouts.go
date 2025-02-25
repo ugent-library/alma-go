@@ -21,7 +21,14 @@ func init() {
 var getPrintoutsCmd = &cobra.Command{
 	Use:   "printouts",
 	Short: "Get printouts",
-	Args:  cobra.NoArgs,
+	Long: `Get printouts
+
+# Retrieve the first 10 printouts
+alma printouts
+
+# Retrieve the second batch of 10 printouts
+alma printouts --offset 11`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
