@@ -15,7 +15,11 @@ func init() {
 var getUserCmd = &cobra.Command{
 	Use:   "user [id]",
 	Short: "Get user",
-	Args:  cobra.ExactArgs(1),
+	Long: `Get user
+
+# Retrieve a user by primary id
+alma user 4685821335 > /tmp/user.json`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
@@ -31,7 +35,11 @@ var getUserCmd = &cobra.Command{
 var updateUserCmd = &cobra.Command{
 	Use:   "update [id]",
 	Short: "Update user",
-	Args:  cobra.ExactArgs(1),
+	Long: `Update user
+
+# Update a user record with primary id 4685821335
+alma user update 4685821335 < /tmp/user.json`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
