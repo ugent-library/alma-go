@@ -27,7 +27,7 @@ var getPrintoutsCmd = &cobra.Command{
 alma printouts
 
 # Retrieve the second batch of 10 printouts
-alma printouts --offset 11`,
+alma printouts --offset 10`,
 	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
