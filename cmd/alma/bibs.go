@@ -25,7 +25,14 @@ func init() {
 var getBibsCmd = &cobra.Command{
 	Use:   "bibs",
 	Short: "Get bibs",
-	Args:  cobra.NoArgs,
+	Long: `Get bibs
+
+# Retrieve bib data by one ore more bib record ids (max 100)
+alma bibs --mms-id 991119460000541,991457160000541
+
+# Retrieve bib data by holdings id
+alma bibs --holdings-id 224656590000541`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 

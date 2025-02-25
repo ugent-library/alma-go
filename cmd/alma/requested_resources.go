@@ -25,7 +25,14 @@ func init() {
 var getRequestedResourcesCmd = &cobra.Command{
 	Use:   "requested-resources",
 	Short: "Get requested resources",
-	Args:  cobra.NoArgs,
+	Long: `Get requested resources
+
+# Retrieve the first 10 requested resources from the MAIN library DEFAULT_CIRC_DESK circulation desk
+alma requested-resources --library MAIN --circ-desk DEFAULT_CIRC DESK
+
+# Retrieve the second batch of requested resources
+alma requested-resources --library MAIN --circ-desk DEFAULT_CIRC DESK --offset 10`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 

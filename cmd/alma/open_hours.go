@@ -23,8 +23,12 @@ func init() {
 
 var getOpenHoursCmd = &cobra.Command{
 	Use:   "open-hours",
-	Short: "Get open hours",
-	Args:  cobra.NoArgs,
+	Short: "Get openings hours",
+	Long: `Get openings hours
+
+# Retrieve the opening hours for the WE55 library
+alma open-hours --scope WE55 > /tmp/WE.hours.json`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
@@ -39,8 +43,12 @@ var getOpenHoursCmd = &cobra.Command{
 
 var updateOpenHoursCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Update open hours",
-	Args:  cobra.NoArgs,
+	Short: "Update openings hours",
+	Long: `Update opening hours
+
+# Update the opening hours for the WE55 library
+alma open-hours update --scope WE55 < /tmp/WE.hours.json`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
