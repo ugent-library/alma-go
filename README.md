@@ -62,3 +62,9 @@ git clone git@github.com:ugent-library/alma-go.git
 cd alma-go
 go build -o ~/bin/alma cmd/alma/*
 ```
+
+## Development
+
+```sh
+go run cmd/alma/* [command] [opts...]
+```
