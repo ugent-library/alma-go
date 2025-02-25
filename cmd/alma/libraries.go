@@ -11,7 +11,11 @@ func init() {
 var getLibrariesCmd = &cobra.Command{
 	Use:   "libraries",
 	Short: "Get libraries",
-	Args:  cobra.NoArgs,
+	Long: `Get llibraries
+
+# Retrieve all libraries in a pretty format
+alma libraries --pretty`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
