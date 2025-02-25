@@ -12,7 +12,11 @@ func init() {
 var getLibraryCmd = &cobra.Command{
 	Use:   "library [id]",
 	Short: "Get library",
-	Args:  cobra.ExactArgs(1),
+	Long: `Get library
+
+# Retrieve information about the WE55 library in a pretty format
+alma library WE55 --pretty`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
@@ -27,8 +31,12 @@ var getLibraryCmd = &cobra.Command{
 
 var getLibraryOpenHoursCmd = &cobra.Command{
 	Use:   "open-hours [id]",
-	Short: "Get library",
-	Args:  cobra.ExactArgs(1),
+	Short: "Get library opening hours",
+	Long: `Get library opening hours
+
+# Retrieve the opening hours of the WE55 library in a pretty format
+alma library open-hours WE55 --pretty`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		almaClient := newAlmaClient()
 
