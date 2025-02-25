@@ -26,6 +26,8 @@ var getOpenHoursCmd = &cobra.Command{
 	Short: "Get open hours",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetOpenHours(cmd.Context(), getOpenHoursParams)
 		if err != nil {
 			return err
@@ -40,6 +42,8 @@ var updateOpenHoursCmd = &cobra.Command{
 	Short: "Update open hours",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		reqBody, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err

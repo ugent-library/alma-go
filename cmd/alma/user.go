@@ -17,6 +17,8 @@ var getUserCmd = &cobra.Command{
 	Short: "Get user",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetUser(cmd.Context(), args[0])
 		if err != nil {
 			return err
@@ -31,6 +33,8 @@ var updateUserCmd = &cobra.Command{
 	Short: "Update user",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		reqBody, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err

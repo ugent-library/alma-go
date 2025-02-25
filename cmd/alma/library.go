@@ -14,6 +14,8 @@ var getLibraryCmd = &cobra.Command{
 	Short: "Get library",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetLibrary(cmd.Context(), args[0])
 		if err != nil {
 			return err
@@ -28,6 +30,8 @@ var getLibraryOpenHoursCmd = &cobra.Command{
 	Short: "Get library",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetLibraryOpenHours(cmd.Context(), args[0])
 		if err != nil {
 			return err

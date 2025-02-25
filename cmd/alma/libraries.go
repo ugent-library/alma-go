@@ -13,6 +13,8 @@ var getLibrariesCmd = &cobra.Command{
 	Short: "Get libraries",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetLibraries(cmd.Context())
 		if err != nil {
 			return err

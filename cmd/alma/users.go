@@ -23,6 +23,8 @@ var getUsersCmd = &cobra.Command{
 	Short: "Get users",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetUsers(cmd.Context(), getUsersParams)
 		if err != nil {
 			return err

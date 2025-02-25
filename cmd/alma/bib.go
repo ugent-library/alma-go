@@ -51,6 +51,8 @@ var getBibCmd = &cobra.Command{
 	Short: "Get bib",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetBib(cmd.Context(), args[0], getBibParams)
 		if err != nil {
 			return err
@@ -65,6 +67,8 @@ var getBibRecordCmd = &cobra.Command{
 	Short: "Get bib record only",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resData, err := almaClient.GetBib(cmd.Context(), args[0], alma.GetBibParams{})
 		if err != nil {
 			return err
@@ -142,6 +146,8 @@ var getHoldingsCmd = &cobra.Command{
 	Short: "Get bib holdings",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetHoldings(cmd.Context(), args[0])
 		if err != nil {
 			return err
@@ -156,6 +162,8 @@ var getHoldingCmd = &cobra.Command{
 	Short: "Get bib holding",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetHolding(cmd.Context(), args[0], args[1])
 		if err != nil {
 			return err
@@ -170,6 +178,8 @@ var getHoldingItemsCmd = &cobra.Command{
 	Short: "Get bib holding items",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetHoldingItems(cmd.Context(), args[0], args[1], getItemsParams)
 		if err != nil {
 			return err

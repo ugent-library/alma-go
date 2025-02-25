@@ -27,6 +27,8 @@ var getBibsCmd = &cobra.Command{
 	Short: "Get bibs",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetBibs(cmd.Context(), getBibsParams)
 		if err != nil {
 			return err

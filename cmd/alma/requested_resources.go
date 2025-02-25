@@ -27,6 +27,8 @@ var getRequestedResourcesCmd = &cobra.Command{
 	Short: "Get requested resources",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetRequestedResources(cmd.Context(), getRequestedResourcesParams)
 		if err != nil {
 			return err

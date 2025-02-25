@@ -23,6 +23,8 @@ var getPrintoutsCmd = &cobra.Command{
 	Short: "Get printouts",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
 		resBody, err := almaClient.RawGetPrintouts(cmd.Context(), getPrintoutsParams)
 		if err != nil {
 			return err
