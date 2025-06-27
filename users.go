@@ -95,3 +95,11 @@ func (c *Client) UpdateUser(ctx context.Context, id string, data *User) (*User, 
 	}
 	return resData, nil
 }
+
+type DeleteUserParams struct {
+	UserIDType string `url:"user_id_type,omitempty"`
+}
+
+func (c *Client) DeleteUser(ctx context.Context, id string, params DeleteUserParams) error {
+	return c.request(ctx, "DELETE", fmt.Sprintf("/users/%s", id), params, nil, nil)
+}

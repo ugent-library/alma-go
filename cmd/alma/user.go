@@ -5,11 +5,16 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/ugent-library/alma-go"
 )
+
+var deleteUserParams = alma.DeleteUserParams{}
 
 func init() {
 	rootCmd.AddCommand(getUserCmd)
 	getUserCmd.AddCommand(updateUserCmd)
+	getUserCmd.AddCommand(deleteUserCmd)
+	deleteUserCmd.Flags().StringVar(&deleteUserParams.UserIDType, "user-id-type", "", "")
 }
 
 var getUserCmd = &cobra.Command{
@@ -54,5 +59,16 @@ alma user update 4685821335 < /tmp/user.json`,
 		}
 
 		return writeJSON(cmd, resBody)
+	},
+}
+
+var deleteUserCmd = &cobra.Command{
+	Use:   "delete [id]",
+	Short: "Delete user",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
+		return almaClient.DeleteUser(cmd.Context(), args[0], deleteUserParams)
 	},
 }

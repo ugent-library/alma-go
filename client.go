@@ -104,8 +104,10 @@ func (c *Client) request(ctx context.Context, method, path string, params, reqDa
 		return err
 	}
 
-	if err := json.Unmarshal(resBody, resData); err != nil {
-		return err
+	if resData != nil {
+		if err := json.Unmarshal(resBody, resData); err != nil {
+			return err
+		}
 	}
 
 	return nil
