@@ -47,6 +47,7 @@ type User struct {
 	StatusDate             string           `json:"status_date,omitempty" xml:"status_date,omitempty"`
 	UserGroup              *Code            `json:"user_group,omitempty" xml:"user_group,omitempty"`
 	UserIdentifier         []UserIdentifier `json:"user_identifier,omitempty" xml:"user_identifiers>user_identifier,omitempty"`
+	UserNote               []UserNote       `json:"user_note,omitempty" xml:"user_note,omitempty"`
 	UserTitle              *Code            `json:"user_title,omitempty" xml:"user_title,omitempty"`
 	WebsiteURL             string           `json:"web_site_url,omitempty" xml:"web_site_url,omitempty"`
 }
@@ -56,6 +57,15 @@ type UserIdentifier struct {
 	Value  string `json:"value" xml:"value"`
 	Note   string `json:"note,omitempty" xml:"note,omitempty"`
 	Status string `json:"status,omitempty" xml:"status,omitempty"`
+}
+
+type UserNote struct {
+	CreatedBy    string `json:"created_by,omitempty" xml:"created_by,omitempty"`
+	NoteText     string `json:"note_text" xml:"note_text"`
+	NoteType     Code   `json:"note_type" xml:"note_type"`
+	PopupNote    bool   `json:"popup_note" xml:"popup_note"`
+	SegmentType  string `json:"segment_type,omitempty" xml:"segment_type,omitempty"`
+	UserViewable bool   `json:"user_viewable" xml:"user_viewable"`
 }
 
 type GetUsersParams struct {
