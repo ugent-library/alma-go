@@ -47,7 +47,7 @@ type User struct {
 	StatusDate             string           `json:"status_date,omitempty" xml:"status_date,omitempty"`
 	UserGroup              *Code            `json:"user_group,omitempty" xml:"user_group,omitempty"`
 	UserIdentifier         []UserIdentifier `json:"user_identifier,omitempty" xml:"user_identifiers>user_identifier,omitempty"`
-	UserNote               []UserNote       `json:"user_note,omitempty" xml:"user_note,omitempty"`
+	UserNote               []UserNote       `json:"user_note,omitempty" xml:"user_notes>user_note,omitempty"`
 	UserTitle              *Code            `json:"user_title,omitempty" xml:"user_title,omitempty"`
 	WebsiteURL             string           `json:"web_site_url,omitempty" xml:"web_site_url,omitempty"`
 }
@@ -61,6 +61,8 @@ type UserIdentifier struct {
 
 type UserNote struct {
 	CreatedBy    string `json:"created_by,omitempty" xml:"created_by,omitempty"`
+	CreatedDate  string `json:"created_date,omitempty" xml:"created_date,omitempty"`
+	NoteOwner    string `json:"note_owner,omitempty" xml:"note_owner,omitempty"`
 	NoteText     string `json:"note_text" xml:"note_text"`
 	NoteType     Code   `json:"note_type" xml:"note_type"`
 	PopupNote    bool   `json:"popup_note" xml:"popup_note"`
