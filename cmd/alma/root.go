@@ -20,8 +20,8 @@ func init() {
 
 func newAlmaClient() *alma.Client {
 	client, err := alma.New(alma.Config{
-		URL:    config.URL,
-		ApiKey: config.ApiKey,
+		URL:    config.Alma.URL,
+		ApiKey: config.Alma.ApiKey,
 	})
 	cobra.CheckErr(err)
 	return client
