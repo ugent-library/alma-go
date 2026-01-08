@@ -9,12 +9,19 @@ import (
 )
 
 var deleteUserParams = alma.DeleteUserParams{}
+var getUserFeesParams = alma.GetUserFeesParams{}
 
 func init() {
 	rootCmd.AddCommand(getUserCmd)
+
 	getUserCmd.AddCommand(updateUserCmd)
-	getUserCmd.AddCommand(deleteUserCmd)
+
 	deleteUserCmd.Flags().StringVar(&deleteUserParams.UserIDType, "user-id-type", "", "")
+	getUserCmd.AddCommand(deleteUserCmd)
+
+	getUserFeesCmd.Flags().StringVar(&getUserFeesParams.UserIDType, "user-id-type", "", "")
+	getUserFeesCmd.Flags().StringVar(&getUserFeesParams.Status, "status", "", "")
+	getUserCmd.AddCommand(getUserFeesCmd)
 }
 
 var getUserCmd = &cobra.Command{
@@ -70,5 +77,25 @@ var deleteUserCmd = &cobra.Command{
 		almaClient := newAlmaClient()
 
 		return almaClient.DeleteUser(cmd.Context(), args[0], deleteUserParams)
+	},
+}
+
+var getUserFeesCmd = &cobra.Command{
+	Use:   "fees [id]",
+	Short: "Get user",
+	Long: `Get user
+
+# Retrieve user fees by user identifier
+alma user fees 4685821335 > /tmp/fees.json`,
+	Args: cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		almaClient := newAlmaClient()
+
+		resBody, err := almaClient.RawGetUserFees(cmd.Context(), args[0], alma.GetUserFeesParams{})
+		if err != nil {
+			return err
+		}
+
+		return writeJSON(cmd, resBody)
 	},
 }
