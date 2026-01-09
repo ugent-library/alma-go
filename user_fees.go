@@ -23,7 +23,7 @@ func (c *Client) RawGetUserFees(ctx context.Context, id string, params GetUserFe
 
 func (c *Client) GetUserFees(ctx context.Context, id string, params GetUserFeesParams) (*Fees, error) {
 	resData := &Fees{}
-	if err := c.request(ctx, "GET", fmt.Sprintf("/users/%s", id), params, nil, resData); err != nil {
+	if err := c.request(ctx, "GET", fmt.Sprintf("/users/%s/fees", id), params, nil, resData); err != nil {
 		return nil, err
 	}
 	return resData, nil
