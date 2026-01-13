@@ -28,3 +28,28 @@ func (c *Client) GetUserFees(ctx context.Context, id string, params GetUserFeesP
 	}
 	return resData, nil
 }
+
+type PayUserFeesParams struct {
+	UserIDType            string `url:"user_id_type,omitempty"`
+	Op                    string `url:"op"`
+	Amount                string `url:"amount,omitempty"`
+	Method                string `url:"method,omitempty"`
+	Comment               string `url:"comment,omitempty"`
+	ExternalTransactionID string `url:"external_transaction_id,omitempty"`
+}
+
+func (c *Client) RawPayUserFees(ctx context.Context, id string, params PayUserFeesParams) ([]byte, error) {
+	params.Op = "pay"
+
+	return c.rawRequest(ctx, "POST", fmt.Sprintf("/users/%s/fees/all", id), params, nil)
+}
+
+func (c *Client) PayUserFees(ctx context.Context, id string, params PayUserFeesParams) (*Fees, error) {
+	params.Op = "pay"
+
+	resData := &Fees{}
+	if err := c.request(ctx, "POST", fmt.Sprintf("/users/%s/fees/all", id), params, nil, resData); err != nil {
+		return nil, err
+	}
+	return resData, nil
+}
